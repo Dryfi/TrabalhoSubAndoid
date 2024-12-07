@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Campo de RA -->
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="RA:" />
+    <EditText android:id="@+id/edtRA" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Digite o RA" />
+
+    <!-- Campo de Nome -->
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Nome:" />
+    <EditText android:id="@+id/edtNome" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Digite o Nome" />
+
+    <!-- Campo de Disciplina -->
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Disciplina:" />
+    <Spinner android:id="@+id/spinnerDisciplina" android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+    <!-- Campo de Nota -->
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Nota:" />
+    <EditText android:id="@+id/edtNota" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Digite a Nota" />
+
+    <!-- Campo de Bimestre -->
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bimestre:" />
+    <Spinner android:id="@+id/spinnerBimestre" android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+    <!-- Botão para Adicionar -->
+    <Button android:id="@+id/btnAdicionar" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Adicionar" />
+</LinearLayout>

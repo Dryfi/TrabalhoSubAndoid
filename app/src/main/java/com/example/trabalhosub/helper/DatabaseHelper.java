@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "app_database.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -15,15 +15,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Crie as tabelas aqui
-        db.execSQL("CREATE TABLE Aluno (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, matricula TEXT);");
-        db.execSQL("CREATE TABLE Nota (id INTEGER PRIMARY KEY AUTOINCREMENT, alunoId INTEGER, disciplinaId INTEGER, nota REAL);");
+        db.execSQL("CREATE TABLE Aluno (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT NOT NULL, matricula TEXT NOT NULL UNIQUE);");
+        db.execSQL("CREATE TABLE Disciplina (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT NOT NULL UNIQUE);");
+        db.execSQL("CREATE TABLE Nota (id INTEGER PRIMARY KEY AUTOINCREMENT, alunoId INTEGER, disciplinaId INTEGER, nota REAL, bimestre INTEGER, FOREIGN KEY (alunoId) REFERENCES Aluno(id), FOREIGN KEY (disciplinaId) REFERENCES Disciplina(id));");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS Aluno");
         db.execSQL("DROP TABLE IF EXISTS Nota");
+        db.execSQL("DROP TABLE IF EXISTS Disciplina");
+        db.execSQL("DROP TABLE IF EXISTS Aluno");
         onCreate(db);
     }
 }

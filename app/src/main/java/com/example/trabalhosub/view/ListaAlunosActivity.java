@@ -1,36 +1,35 @@
 package com.example.trabalhosub.view;
 
 import android.os.Bundle;
-import android.widget.ListView;
 import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.trabalhosub.R;
 import com.example.trabalhosub.dao.AlunoDAO;
 import com.example.trabalhosub.model.Aluno;
+
 import java.util.List;
 
 public class ListaAlunosActivity extends AppCompatActivity {
 
-    private ListView listViewAlunos;
-    private AlunoDAO alunoDAO;  // Referência ao DAO que acessa o banco de dados
+    private Spinner spinnerAluno; // Utilizando o Spinner para exibir os alunos
+    private AlunoDAO alunoDAO;
     private ArrayAdapter<Aluno> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_alunos);  // Referência ao layout
 
-        listViewAlunos = findViewById(R.id.listViewAlunos);
-        alunoDAO = new AlunoDAO(this);  // Instância do DAO
+        setContentView(R.layout.activity_cadastro_notas);
 
-        // Obtém a lista de alunos do banco de dados
+        spinnerAluno = findViewById(R.id.spinnerDisciplina); // Reutilizando o Spinner existente
+        alunoDAO = new AlunoDAO(this);
+
         List<Aluno> listaAlunos = alunoDAO.getAllAlunos();
 
-        // Criar um adaptador para a lista de alunos
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listaAlunos);
-
-        // Configura o ListView para exibir a lista de alunos
-        listViewAlunos.setAdapter(adapter);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listaAlunos);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAluno.setAdapter(adapter);
     }
 }

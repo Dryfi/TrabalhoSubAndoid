@@ -11,7 +11,7 @@ public class AlunoController {
 
     public AlunoController(Context context) {
         this.context = context;
-        this.alunoDAO = new AlunoDAO(context);  // Crie uma instância de AlunoDAO
+        this.alunoDAO = new AlunoDAO(context);
     }
 
     public void adicionarAluno(String nome, String matricula) {
@@ -20,7 +20,7 @@ public class AlunoController {
             return;
         }
 
-        // Adiciona o aluno ao banco de dados
+
         boolean sucesso = alunoDAO.inserir(nome, matricula);
         if (sucesso) {
             Toast.makeText(context, "Aluno cadastrado com sucesso!", Toast.LENGTH_SHORT).show();

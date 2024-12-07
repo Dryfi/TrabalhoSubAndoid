@@ -4,45 +4,58 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import com.example.trabalhosub.model.Nota;
+
 import com.example.trabalhosub.helper.DatabaseHelper;
-import com.example.trabalhosub.model.Aluno;
-import com.example.trabalhosub.model.Disciplina;
+import com.example.trabalhosub.model.Nota;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NotaDAO {
+
     private SQLiteDatabase db;
-    private DatabaseHelper helper;
+    private DatabaseHelper dbHelper;
 
     public NotaDAO(Context context) {
-        helper = new DatabaseHelper(context);
-        db = helper.getWritableDatabase();
+        dbHelper = new DatabaseHelper(context);
     }
 
-    // Método para inserir uma nota
-    public long inserir(Nota nota) {
+    public boolean inserirNota(int alunoId, int disciplinaId, double nota, int bimestre) {
+        db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("id_aluno", nota.getAluno().getMatricula());
-        values.put("id_disciplina", nota.getDisciplina().getNome());
-        values.put("nota", nota.getNota());
-        return db.insert("nota", null, values);
+        values.put("alunoId", alunoId);
+        values.put("disciplinaId", disciplinaId);
+        values.put("nota", nota);
+        values.put("bimestre", bimestre);
+
+        long resultado = db.insert("Nota", null, values);
+        db.close();
+        return resultado != -1;
+    }
+    public List<Nota> getNotasPorAluno(int alunoId) {
+        List<Nota> listaNotas = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Nota WHERE alunoId = ?", new String[]{String.valueOf(alunoId)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                int disciplinaId = cursor.getInt(cursor.getColumnIndexOrThrow("disciplinaId"));
+                double nota = cursor.getDouble(cursor.getColumnIndexOrThrow("nota"));
+                int bimestre = cursor.getInt(cursor.getColumnIndexOrThrow("bimestre"));
+                listaNotas.add(new Nota(id, alunoId, disciplinaId, nota, bimestre));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return listaNotas;
     }
 
-    // Método para listar as notas
-    public List<Nota> listar() {
-        List<Nota> notas = new ArrayList<>();
-        Cursor cursor = db.query("nota", new String[]{"id", "id_aluno", "id_disciplina", "nota"},
-                null, null, null, null, null);
-        while (cursor.moveToNext()) {
-            // Exemplo simples, falta conectar com Aluno e Disciplina
-            Nota nota = new Nota(new Aluno(cursor.getString(1), ""),
-                    new Disciplina(cursor.getString(2), 0),
-                    cursor.getDouble(3));
-            notas.add(nota);
-        }
-        cursor.close();
-        return notas;
+    public boolean deletarNota(int notaId) {
+        db = dbHelper.getWritableDatabase();
+        int resultado = db.delete("Nota", "id = ?", new String[]{String.valueOf(notaId)});
+        db.close();
+        return resultado > 0;
     }
 }

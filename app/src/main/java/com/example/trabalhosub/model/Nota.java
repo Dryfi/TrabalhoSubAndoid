@@ -1,32 +1,42 @@
 package com.example.trabalhosub.model;
 
 public class Nota {
-    private Aluno aluno;
-    private Disciplina disciplina;
+    private int id;
+    private int alunoId;
+    private int disciplinaId;
     private double nota;
+    private int bimestre;
 
-    // Construtor
-    public Nota(Aluno aluno, Disciplina disciplina, double nota) {
-        this.aluno = aluno;
-        this.disciplina = disciplina;
+    public Nota(int id, int alunoId, int disciplinaId, double nota, int bimestre) {
+        this.id = id;
+        this.alunoId = alunoId;
+        this.disciplinaId = disciplinaId;
         this.nota = nota;
+        this.bimestre = bimestre;
     }
 
-    // Getters e Setters
-    public Aluno getAluno() {
-        return aluno;
+    public int getId() {
+        return id;
     }
 
-    public void setAluno(Aluno aluno) {
-        this.aluno = aluno;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public Disciplina getDisciplina() {
-        return disciplina;
+    public int getAlunoId() {
+        return alunoId;
     }
 
-    public void setDisciplina(Disciplina disciplina) {
-        this.disciplina = disciplina;
+    public void setAlunoId(int alunoId) {
+        this.alunoId = alunoId;
+    }
+
+    public int getDisciplinaId() {
+        return disciplinaId;
+    }
+
+    public void setDisciplinaId(int disciplinaId) {
+        this.disciplinaId = disciplinaId;
     }
 
     public double getNota() {
@@ -37,12 +47,11 @@ public class Nota {
         this.nota = nota;
     }
 
-    @Override
-    public String toString() {
-        return "Nota{" +
-                "aluno=" + aluno.getNome() +
-                ", disciplina=" + disciplina.getNome() +
-                ", nota=" + nota +
-                '}';
+    public int getBimestre() {
+        return bimestre;
+    }
+
+    public void setBimestre(int bimestre) {
+        this.bimestre = bimestre;
     }
 }

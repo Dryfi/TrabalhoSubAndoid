@@ -1,10 +1,13 @@
 package com.example.trabalhosub.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import com.example.trabalhosub.helper.DatabaseHelper;
 import com.example.trabalhosub.model.Aluno;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,30 +20,50 @@ public class AlunoDAO {
         dbHelper = new DatabaseHelper(context);
     }
 
-    // Método para buscar todos os alunos
+    public boolean inserir(String nome, String matricula) {
+        db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("nome", nome);
+        values.put("matricula", matricula);
+
+        long resultado = db.insert("Aluno", null, values);
+        db.close();
+        return resultado != -1;
+    }
+
     public List<Aluno> getAllAlunos() {
-        List<Aluno> alunos = new ArrayList<>();
-        db = dbHelper.getReadableDatabase(); // Obter o banco de dados para leitura
+        db = dbHelper.getReadableDatabase();
+        List<Aluno> listaAlunos = new ArrayList<>();
 
-        // Consultando todos os alunos na tabela "aluno"
-        Cursor cursor = db.rawQuery("SELECT * FROM aluno", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM Aluno", null);
 
-        // Verifica se há resultados
         if (cursor.moveToFirst()) {
             do {
-                // Pega os dados do cursor
-                String nome = cursor.getString(cursor.getColumnIndex("nome"));
-                String matricula = cursor.getString(cursor.getColumnIndex("matricula"));
-
-                // Cria um objeto Aluno e adiciona na lista
-                alunos.add(new Aluno(nome, matricula));
-            } while (cursor.moveToNext()); // Move para o próximo registro
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                String nome = cursor.getString(cursor.getColumnIndexOrThrow("nome"));
+                String matricula = cursor.getString(cursor.getColumnIndexOrThrow("matricula"));
+                listaAlunos.add(new Aluno(id, nome, matricula));
+            } while (cursor.moveToNext());
         }
 
-        // Fechar o cursor e o banco de dados após o uso
         cursor.close();
         db.close();
+        return listaAlunos;
+    }
+    public boolean deletar(int alunoId) {
+        db = dbHelper.getWritableDatabase();
+        int resultado = db.delete("Aluno", "id = ?", new String[]{String.valueOf(alunoId)});
+        db.close();
+        return resultado > 0;
+    }
+    public boolean atualizar(int id, String nome, String matricula) {
+        db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("nome", nome);
+        values.put("matricula", matricula);
 
-        return alunos;
+        int resultado = db.update("Aluno", values, "id = ?", new String[]{String.valueOf(id)});
+        db.close();
+        return resultado > 0;
     }
 }
