@@ -1,8 +1,9 @@
 # Build
 /build
-/.idea
+.idea
 /local.properties
 /TrabalhoSubAndoid
+.gradle
 
 # Logs e backups
 *.log
