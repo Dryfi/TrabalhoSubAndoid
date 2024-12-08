@@ -3,6 +3,10 @@ package com.example.trabalhosub.view;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.trabalhosub.R;
@@ -21,8 +25,21 @@ public class ListaAlunosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_cadastro_notas);
+        setContentView(R.layout.activity_relacao_notas);
 
+        TableLayout tableNotas = findViewById(R.id.tableNotas);
+        TableRow row = new TableRow(this);
+
+        TextView disciplina = new TextView(this);
+        disciplina.setText("Disciplina Teste");
+        row.addView(disciplina);
+
+        TextView nota = new TextView(this);
+        nota.setText("Nota Teste");
+        row.addView(nota);
+
+        tableNotas.addView(row);
+        
         spinnerAluno = findViewById(R.id.spinnerDisciplina); // Reutilizando o Spinner existente
         alunoDAO = new AlunoDAO(this);
 

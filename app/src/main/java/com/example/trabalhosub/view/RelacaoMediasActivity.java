@@ -1,6 +1,8 @@
 package com.example.trabalhosub.view;
 
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -19,6 +21,11 @@ public class RelacaoMediasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_relacao_medias);
 
+        Spinner spinnerDisciplina = findViewById(R.id.spinnerDisciplina);
+        ArrayAdapter<String> adapterDisciplina = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new String[]{"Disciplina 1", "Disciplina 2"});
+        adapterDisciplina.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerDisciplina.setAdapter(adapterDisciplina);
+        
         TableLayout tableMedias = findViewById(R.id.tableMedias);
         NotaDAO notaDAO = new NotaDAO(this);
 

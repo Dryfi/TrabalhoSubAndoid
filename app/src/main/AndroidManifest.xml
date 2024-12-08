@@ -9,7 +9,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TrabalhoSub">
 
-        <!-- Atividade principal do aplicativo -->
         <activity android:name=".view.CadastroAlunoActivity"
             android:exported="true">
             <intent-filter>
@@ -18,12 +17,8 @@
             </intent-filter>
         </activity>
 
-        <!-- Outras atividades do aplicativo -->
         <activity android:name=".view.MainActivity" android:exported="false" />
         <activity android:name=".view.ListaAlunosActivity" android:exported="false" />
         <activity android:name=".view.RelacaoMediasActivity" android:exported="false" />
-        <activity android:name=".view.RelacaoNotasActivity" android:exported="false" />
-
     </application>
-
 </manifest>
